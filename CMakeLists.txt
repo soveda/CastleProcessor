@@ -40,6 +40,10 @@ target_include_directories(CastleProcess PRIVATE
     .
 )
 
+target_compile_definitions(CastleProcess PRIVATE
+    PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
+)
+
 # ============================================================
 # Libraries
 # ============================================================
@@ -58,6 +62,9 @@ target_link_libraries(CastleProcess
     hardware_flash
     hardware_i2c
 )
+
+pico_enable_stdio_usb(CastleProcess 0)
+pico_set_binary_type(CastleProcess copy_to_ram)
 
 # ============================================================
 # Create UF2/BIN/etc
