@@ -1,0 +1,60 @@
+┌────────────────────────────────────────────┐
+│  73                                        │
+│                                            │
+│             CASTLE PROCESS                 │
+│                                            │
+│   Fort Processor-inspired noise mangler    │
+│                                            │
+├────────────────────────────────────────────┤
+│                                            │
+│ CONTROLS                                   │
+│                                            │
+│ MAIN  → Motion / pitch                     │
+│ X     → Gain / density                     │
+│ Y     → Feedback / grit                    │
+│                                            │
+├────────────────────────────────────────────┤
+│                                            │
+│ SWITCH MODES                               │
+│                                            │
+│ UP      Cleaner / tighter                  │
+│ MID     Wider / echoier                    │
+│ DOWN    Aggressive / unstable              │
+│                                            │
+├────────────────────────────────────────────┤
+│                                            │
+│ INPUTS                                     │
+│                                            │
+│ Pulse 1  → External trigger                │
+│ Pulse 2  → Freeze                          │
+│ CV 1     → X modulation                    │
+│ CV 2     → Y modulation                    │
+│                                            │
+├────────────────────────────────────────────┤
+│                                            │
+│ OUTPUTS                                    │
+│                                            │
+│ Pulse 1 → Trigger pulse                    │
+│ Pulse 2 → Companion pulse                  │
+│ Audio 1 → Primary mangled output           │
+│ Audio 2 → Secondary mangled output         │
+│                                            │
+├────────────────────────────────────────────┤
+│                                            │
+│ PATCH IDEAS                                │
+│                                            │
+│ Audio 1 → Filter / resonator               │
+│ Audio 2 → Stereo partner / delay return    │
+│ P1      → Envelope trigger                 │
+│ P2      → Texture hold                     │
+│                                            │
+├────────────────────────────────────────────┤
+│                                            │
+│ NOTES                                      │
+│                                            │
+│ ________________________________________   │
+│ ________________________________________   │
+│ ________________________________________   │
+│ ________________________________________   │
+│                                            │
+└────────────────────────────────────────────┘
