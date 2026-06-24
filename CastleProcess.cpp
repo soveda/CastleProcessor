@@ -333,8 +333,8 @@ public:
         tri -= 1024;
         tri <<= 1;
 
-        int32_t bass = (tri * bassEnv) >> 10;
-        bass += ((chopped * bassEnv) >> 14);
+        int32_t bass = (tri * bassEnv) >> 9;
+        bass += ((chopped * bassEnv) >> 13);
         return SoftClip(bass);
     }
 
@@ -376,7 +376,7 @@ public:
         delayWrite = (delayWrite + 1) & kDelayMask;
 
         int32_t outA = chopped + (inputVoice >> 2) + (wetTap >> 2);
-        int32_t outB = bass + (wetTap >> 1) - (squareVoice >> 3) + (chopped >> 2);
+        int32_t outB = (bass * 3 >> 1) + (wetTap >> 1) - (squareVoice >> 3) + (chopped >> 3);
 
         if(SwitchVal() == Switch::Up)
         {
