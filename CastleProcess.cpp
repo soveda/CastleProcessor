@@ -260,18 +260,18 @@ public:
         chopPhase += chopRate;
         chopState = (chopPhase & 0x80000000u) != 0;
 
-        int32_t inputGate = (chopPhase & 0x20000000u) ? 1024 : 0;
+        int32_t inputGate = (chopPhase & 0x20000000u) ? 2047 : 0;
         int32_t choppyInput = (inputVoice * inputGate) >> 11;
 
         if(SwitchVal() == Switch::Up)
         {
-            choppyInput += (inputVoice * 256) >> 11;
+            choppyInput += (inputVoice * 128) >> 11;
         }
 
         int32_t chopped = chopState ? squareVoice : choppyInput;
         if(SwitchVal() == Switch::Middle)
         {
-            chopped += (chopState ? choppyInput : (squareVoice >> 1));
+            chopped += (chopState ? (choppyInput >> 2) : (squareVoice >> 3));
         }
 
         return SoftClip(chopped);
@@ -280,9 +280,9 @@ public:
     void TriggerBass(int32_t exciter)
     {
         bassEnv = 4095;
-        bassPitch = 20 + (smoothTune >> 8) + (Abs32(exciter) >> 8);
-        if(bassPitch < 12) bassPitch = 12;
-        if(bassPitch > 92) bassPitch = 92;
+        bassPitch = 9 + (smoothTune >> 9) + (Abs32(exciter) >> 10);
+        if(bassPitch < 6) bassPitch = 6;
+        if(bassPitch > 42) bassPitch = 42;
     }
 
     int32_t ProcessBassStage(int32_t chopped, bool bendHeld)
@@ -293,7 +293,7 @@ public:
 
         if(PulseIn1RisingEdge() || inputStrike)
         {
-            TriggerBass(chopped);
+            TriggerBass(chopped + 1024);
         }
 
         internalStrikePeriod = 24000u - ((uint32_t)smoothChop << 2);
@@ -308,16 +308,16 @@ public:
             internalStrikeCounter = 0;
             if(!PulseIn1())
             {
-                TriggerBass(chopped >> 1);
+                TriggerBass(chopped >> 2);
             }
         }
 
         if(bassEnv > 0)
         {
-            int32_t decay = 1 + ((4095 - smoothGain) >> 8);
+            int32_t decay = 4 + ((4095 - smoothGain) >> 9);
             if(bendHeld)
             {
-                decay += 4;
+                decay += 2;
             }
             bassEnv -= decay;
             if(bassEnv < 0)
@@ -333,8 +333,8 @@ public:
         tri -= 1024;
         tri <<= 1;
 
-        int32_t bass = (tri * bassEnv) >> 12;
-        bass += ((chopped * bassEnv) >> 15);
+        int32_t bass = (tri * bassEnv) >> 10;
+        bass += ((chopped * bassEnv) >> 14);
         return SoftClip(bass);
     }
 
@@ -375,13 +375,13 @@ public:
         WriteDelay(delayWrite, delayWriteValue);
         delayWrite = (delayWrite + 1) & kDelayMask;
 
-        int32_t outA = chopped + bass + (wetTap >> 1);
-        int32_t outB = (chopped >> 1) - (squareVoice >> 2) + (bass >> 1) - (wetTap >> 2);
+        int32_t outA = chopped + (inputVoice >> 2) + (wetTap >> 2);
+        int32_t outB = bass + (wetTap >> 1) - (squareVoice >> 3) + (chopped >> 2);
 
         if(SwitchVal() == Switch::Up)
         {
-            outA += squareVoice >> 2;
-            outB += squareVoice >> 1;
+            outA += squareVoice >> 3;
+            outB += squareVoice >> 2;
         }
 
         if(bendHeld)
