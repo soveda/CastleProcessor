@@ -260,10 +260,18 @@ public:
         chopPhase += chopRate;
         chopState = (chopPhase & 0x80000000u) != 0;
 
-        int32_t chopped = chopState ? squareVoice : inputVoice;
+        int32_t inputGate = (chopPhase & 0x20000000u) ? 1024 : 0;
+        int32_t choppyInput = (inputVoice * inputGate) >> 11;
+
+        if(SwitchVal() == Switch::Up)
+        {
+            choppyInput += (inputVoice * 256) >> 11;
+        }
+
+        int32_t chopped = chopState ? squareVoice : choppyInput;
         if(SwitchVal() == Switch::Middle)
         {
-            chopped += (chopState ? inputVoice : squareVoice) >> 2;
+            chopped += (chopState ? choppyInput : (squareVoice >> 1));
         }
 
         return SoftClip(chopped);
@@ -368,7 +376,7 @@ public:
         delayWrite = (delayWrite + 1) & kDelayMask;
 
         int32_t outA = chopped + bass + (wetTap >> 1);
-        int32_t outB = inputVoice - (squareVoice >> 1) + (bass >> 1) - (wetTap >> 2);
+        int32_t outB = (chopped >> 1) - (squareVoice >> 2) + (bass >> 1) - (wetTap >> 2);
 
         if(SwitchVal() == Switch::Up)
         {
