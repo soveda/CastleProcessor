@@ -70,6 +70,8 @@ public:
     int32_t lastChopSign = 0;
     uint32_t internalStrikeCounter = 0;
     uint32_t internalStrikePeriod = 12000;
+    bool pulse1ExternalActive = false;
+    uint32_t pulse1ExternalTimeout = 0;
 
     int32_t displayLevel = 0;
 
@@ -291,9 +293,25 @@ public:
         bool inputStrike = (sign != lastChopSign) && (Abs32(chopped) > 384);
         lastChopSign = sign;
 
-        if(PulseIn1RisingEdge() || inputStrike)
+        if(PulseIn1RisingEdge())
         {
             TriggerBass(chopped + 1024);
+            pulse1ExternalActive = true;
+            pulse1ExternalTimeout = 48000;
+        }
+
+        if(pulse1ExternalTimeout > 0)
+        {
+            pulse1ExternalTimeout--;
+        }
+        else
+        {
+            pulse1ExternalActive = false;
+        }
+
+        if(!pulse1ExternalActive && inputStrike)
+        {
+            TriggerBass(chopped);
         }
 
         internalStrikePeriod = 24000u - ((uint32_t)smoothChop << 2);
@@ -303,13 +321,14 @@ public:
         }
 
         internalStrikeCounter++;
-        if(internalStrikeCounter >= internalStrikePeriod)
+        if(!pulse1ExternalActive && internalStrikeCounter >= internalStrikePeriod)
         {
             internalStrikeCounter = 0;
-            if(!PulseIn1())
-            {
-                TriggerBass(chopped >> 2);
-            }
+            TriggerBass(chopped >> 2);
+        }
+        else if(pulse1ExternalActive && internalStrikeCounter >= internalStrikePeriod)
+        {
+            internalStrikeCounter = 0;
         }
 
         if(bassEnv > 0)
