@@ -395,7 +395,7 @@ public:
         delayWrite = (delayWrite + 1) & kDelayMask;
 
         int32_t outA = chopped + (inputVoice >> 2) + (wetTap >> 2);
-        int32_t outB = (bass * 3 >> 1) + (wetTap >> 1) - (squareVoice >> 3) + (chopped >> 3);
+        int32_t outB = bass + (wetTap >> 1) - (squareVoice >> 3) + (chopped >> 3);
 
         if(SwitchVal() == Switch::Up)
         {

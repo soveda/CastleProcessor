@@ -3,50 +3,50 @@
 │                                            │
 │             CASTLE PROCESS                 │
 │                                            │
-│   Fort Processor-inspired noise mangler    │
+│  Fort Processor harsh noise performance    │
 │                                            │
 ├────────────────────────────────────────────┤
 │                                            │
 │ CONTROLS                                   │
 │                                            │
-│ MAIN  → Motion / pitch                     │
-│ X     → Gain / density                     │
-│ Y     → Feedback / grit                    │
+│ MAIN  → Drive / voicing                    │
+│ X     → Chopping / motion                  │
+│ Y     → Tuning / interaction               │
 │                                            │
 ├────────────────────────────────────────────┤
 │                                            │
-│ SWITCH MODES                               │
+│ SWITCH                                     │
 │                                            │
-│ UP      Cleaner / tighter                  │
-│ MID     Wider / echoier                    │
-│ DOWN    Aggressive / unstable              │
+│ UP      Fuller / more square colour        │
+│ MID     Tighter chopped default            │
+│ DOWN    Momentary bend / chaos             │
 │                                            │
 ├────────────────────────────────────────────┤
 │                                            │
 │ INPUTS                                     │
 │                                            │
-│ Pulse 1  → External trigger                │
-│ Pulse 2  → Freeze                          │
-│ CV 1     → X modulation                    │
-│ CV 2     → Y modulation                    │
+│ Audio 1  → External audio in               │
+│ CV 1/2   → Internal modulation             │
+│ Pulse 1  → External bass trigger           │
+│ Pulse 2  → Reserved                        │
 │                                            │
 ├────────────────────────────────────────────┤
 │                                            │
 │ OUTPUTS                                    │
 │                                            │
-│ Pulse 1 → Trigger pulse                    │
-│ Pulse 2 → Companion pulse                  │
-│ Audio 1 → Primary mangled output           │
-│ Audio 2 → Secondary mangled output         │
+│ Audio 1 → Chopped external input           │
+│ Audio 2 → Bass + supporting texture        │
+│ Pulse 1 → Bass activity pulse              │
+│ Pulse 2 → Internal chop pulse              │
 │                                            │
 ├────────────────────────────────────────────┤
 │                                            │
 │ PATCH IDEAS                                │
 │                                            │
-│ Audio 1 → Filter / resonator               │
-│ Audio 2 → Stereo partner / delay return    │
-│ P1      → Envelope trigger                 │
-│ P2      → Texture hold                     │
+│ Feed drums or oscillators into Audio 1     │
+│ Trigger Pulse 1 for bass rhythms           │
+│ Use switch Down as live performance bend   │
+│ Split Audio 1 and 2 for layered outputs    │
 │                                            │
 ├────────────────────────────────────────────┤
 │                                            │
