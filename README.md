@@ -1,41 +1,38 @@
 # Castle Process
 
-Fort Processor-inspired experimental card for the Music Thing Modular Workshop Computer.
+Fort Processor-inspired performance card for the Music Thing Modular Workshop Computer.
 
-Castle Process is currently a playable prototype rather than a finished recreation. The present build is centered on a noisy mangling path with external audio mixed into it, plus switch-driven mode changes that already feel useful in performance.
+Castle Process is a noisy chopper, mangler, and low-end pulse generator built around external audio, crude internal square sources, and a momentary performance bend on switch `Down`.
 
----
-
-# Current Status
-
-Hardware testing so far suggests:
-
-* external audio input is audible
-* the internal noise layer is still too dominant
-* switch `Up` and momentary `Down` both feel good
-* `CV 1` and `CV 2` do not yet make an obvious audible difference
-* the intended bass voice is not yet clearly audible
-
-So this version should be treated as an in-progress sound engine.
+This is now behaving as a playable performance card, even though it is still an interpretation rather than a strict clone of the original Fort Processor.
 
 ---
 
-# What The Current Build Does
+# What It Does
 
-At the moment, Castle Process behaves mainly as:
+Castle Process combines four ideas:
 
-* a noisy external-audio mangler
-* a rough chopped texture source
-* a switchable performance effect with a useful momentary chaos gesture on switch `Down`
+* distorted and chopped external audio input
+* crude squarewave internal voice
+* variable chopping between sources
+* a separate bass pulse voice
 
-The current code is aiming toward a Fort Processor-style structure:
+The outputs are intentionally split by role:
 
-* distorted input section
-* crude squarewave section
-* variable chopper between sources
-* bass/drone voice
+* `Audio 1` carries the majority of the chopped external input character
+* `Audio 2` carries the bass voice plus supporting texture
 
-But those sections are not yet balanced correctly in the audio result.
+---
+
+# Current Behaviour
+
+Current hardware testing suggests:
+
+* external audio is now behaving well as a choppy performance source
+* switch `Up` and momentary switch `Down` both work well
+* the card feels usable as a live texture/performance effect
+* `Pulse 1` can be used to test and drive the bass voice directly
+* `CV 1` and `CV 2` are still not the main focus of the present build
 
 ---
 
@@ -43,27 +40,33 @@ But those sections are not yet balanced correctly in the audio result.
 
 ## Main Knob
 
-Currently affects the overall engine voicing and drive behaviour.
+Sets overall drive and voicing behaviour.
 
 ## X Knob
 
-Currently affects chopping and related internal texture behaviour.
+Controls chopping character and speed feel.
 
 ## Y Knob
 
-Currently affects tuning and internal interaction.
-
-## Switch Up
-
-Latched alternate mode. This is already behaving usefully.
+Controls tuning and interaction inside the engine.
 
 ## Switch Middle
 
-Default mixed mode.
+Default mode.
+
+This is the tighter chopped mode and the best starting point for general testing.
+
+## Switch Up
+
+Alternate latched mode.
+
+This lets a little more body through and adds more squarewave colour, so it feels slightly fuller and less brutal than `Middle`.
 
 ## Switch Down
 
-Momentary bend / chaos injection while held. This is one of the strongest working parts of the current build.
+Momentary bend / chaos gesture while held.
+
+This is intended as a live performance action rather than a third steady state.
 
 ---
 
@@ -71,17 +74,21 @@ Momentary bend / chaos injection while held. This is one of the strongest workin
 
 ## Audio In 1
 
-External audio is audible here, but is still largely competing with the internal noise layer rather than taking command of the sound.
+Main external audio input.
+
+This should sound chopped, broken up, and pushed into the machine rather than simply passed through cleanly.
 
 ## CV 1 / CV 2
 
-These are intended to affect the internal control structure, but in the current build they do not yet produce a clear audible response in practice.
+These feed internal control relationships, but are not yet the strongest audible part of the design.
 
-## Pulse 1
+## Pulse In 1
 
-Used as a trigger input in the current design.
+Bass trigger input.
 
-## Pulse 2
+This is the best way to test the bass voice directly.
+
+## Pulse In 2
 
 Reserved for further interaction and future refinement.
 
@@ -89,22 +96,50 @@ Reserved for further interaction and future refinement.
 
 # Outputs
 
-## Audio 1 / Audio 2
+## Audio 1
 
-Two related noisy outputs from the mangling engine.
+Primary chopped external-input output.
 
-## Pulse 1 / Pulse 2
+If you want to hear whether the input gating is working, this is the output to monitor first.
+
+## Audio 2
+
+Bass-focused output with additional supporting texture.
+
+If you want to hear whether the bass voice is working, this is the output to monitor first.
+
+## Pulse Out 1 / Pulse Out 2
 
 Utility pulse outputs derived from internal activity.
 
 ---
 
-# Next Tuning Priorities
+# How To Test The Bass Properly
 
-The most important follow-up jobs are:
+The clearest bass test is:
 
-* bring external audio further forward in the mix
-* make `CV 1` and `CV 2` clearly audible and useful
-* make the bass voice clearly present
-* rebalance the internal sections so the result feels more like a Fort Processor and less like noise layered over input
+1. Monitor `Audio 2`.
+2. Leave `Audio In 1` unplugged or very low.
+3. Start in switch `Middle`.
+4. Set `X` around noon.
+5. Set `Y` low to mid.
+6. Send a clear trigger stream into `Pulse In 1`.
+
+What you should hear:
+
+* a distinct low pulse for each incoming trigger
+* less continuous drone than earlier versions
+* pitch and character shifting as `Y` moves
+* more instability if you hold switch `Down`
+
+If `Pulse In 1` is patched and `Audio 2` still does not give clear low pulses, the bass section needs more work.
+
+---
+
+# Patch Ideas
+
+* feed a drum loop or oscillator into `Audio In 1` and listen to `Audio 1` for chopped destruction
+* use `Audio 2` as the low companion output
+* strike `Pulse In 1` from a sequencer or clock divider to turn the bass voice into a rhythmic layer
+* use switch `Down` as a manual performance accent
 
