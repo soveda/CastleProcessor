@@ -102,6 +102,22 @@ Internal chop pulse output.
 
 ---
 
+# LEDs
+
+The six LEDs show status and internal motion:
+
+* `LED 0` shows input detection for `Audio In 1`
+* `LED 1` follows the drive / voicing state
+* `LED 2` follows the chopping state
+* `LED 3` follows the tuning / interaction state
+* `LED 4` acts as an output activity meter
+* `LED 5` shows switch state:
+  * bright while switch `Down` is held
+  * medium in switch `Up`
+  * dim in switch `Middle`
+
+---
+
 # Patch Ideas
 
 * feed a drum loop, voice, or oscillator into `Audio In 1` for chopped destruction
@@ -109,4 +125,3 @@ Internal chop pulse output.
 * use `Audio 2` as the low companion layer
 * trigger `Pulse In 1` from a sequencer or clock divider for controlled bass rhythms
 * use switch `Down` as a manual performance accent
-
