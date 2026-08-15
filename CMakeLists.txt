@@ -4,10 +4,38 @@ cmake_minimum_required(VERSION 3.13)
 # Raspberry Pi Pico SDK
 # ============================================================
 
-# Set this to your local pico-sdk path
-set(PICO_SDK_PATH "/Users/adrianvos/pico-sdk")
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.2.0)
 
-include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+if(DEFINED ENV{PICO_SDK_PATH} AND NOT EXISTS "$ENV{PICO_SDK_PATH}/pico_sdk_init.cmake")
+    unset(ENV{PICO_SDK_PATH})
+endif()
+
+set(PICO_SDK_CANDIDATES
+    ${CMAKE_CURRENT_LIST_DIR}/../pico-sdk
+    ${CMAKE_CURRENT_LIST_DIR}/../pico-sdk-src
+    ${USERHOME}/pico-sdk
+    /opt/pico-sdk)
+
+if(NOT DEFINED ENV{PICO_SDK_PATH} AND NOT PICO_SDK_PATH)
+    foreach(candidate ${PICO_SDK_CANDIDATES})
+        if(EXISTS ${candidate}/pico_sdk_init.cmake)
+            set(PICO_SDK_PATH ${candidate} CACHE PATH "Path to the Raspberry Pi Pico SDK" FORCE)
+            break()
+        endif()
+    endforeach()
+endif()
+
+if(NOT DEFINED ENV{PICO_SDK_PATH} AND NOT PICO_SDK_PATH)
+    set(PICO_SDK_FETCH_FROM_GIT ON CACHE BOOL "Fetch Raspberry Pi Pico SDK when no local SDK is available" FORCE)
+    set(PICO_SDK_FETCH_FROM_GIT_TAG ${sdkVersion} CACHE STRING "Raspberry Pi Pico SDK git tag" FORCE)
+endif()
+
+include(${CMAKE_CURRENT_LIST_DIR}/pico_sdk_import.cmake)
 
 # ============================================================
 # Project
@@ -37,7 +65,7 @@ add_executable(CastleProcess
 # ============================================================
 
 target_include_directories(CastleProcess PRIVATE
-    .
+    ${CMAKE_CURRENT_LIST_DIR}
 )
 
 target_compile_definitions(CastleProcess PRIVATE
